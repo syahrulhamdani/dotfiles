@@ -11,12 +11,17 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " all Plugin here
+Plugin 'airblade/vim-gitgutter'
+Plugin 'brentyi/isort.vim'
 Plugin 'dense-analysis/ale'
 Plugin 'dracula/vim',{'name':'dracula'}
+Plugin 'Exafunction/codeium.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'kyoz/purify',{'rtp':'vim'}
 Plugin 'mengelbrecht/lightline-bufferline'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
+Plugin 'joshdick/onedark.vim'
 Plugin 'rakr/vim-one'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/nerdtree'
@@ -29,7 +34,7 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'valloric/youcompleteme'
 Plugin 'Yggdroot/indentLine'
 Plugin 'psliwka/vim-smoothie'
 
@@ -40,7 +45,8 @@ filetype indent on
 
 syntax on
 " colorscheme dracula
-colorscheme purify
+" colorscheme purify
+colorscheme onedark
 " colorscheme onehalfdark
 " colorscheme one
 " set background=dark
@@ -57,6 +63,13 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 set path+=**
 " Display all the matching files using `tab`
 set wildmenu
+
+" configure codeium
+set statusline+=\{…\}%3{codeium#GetStatusString()}
+imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+imap <C-;>   <Cmd>call codeium#CycleCompletions(1)<CR>
+imap <C-,>   <Cmd>call codeium#CycleCompletions(-1)<CR>
+imap <C-x>   <Cmd>call codeium#Clear()<CR>
 
 " vim-markdown config
 let g:vim_markdown_conceal=0
@@ -88,7 +101,7 @@ let g:lightline#bufferline#show_number = 1
 let g:lightline#bufferline#number_separator = ": "
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline = {
-	\ 'colorscheme': 'purify',
+	\ 'colorscheme': 'onedark',
 	\ 'active': {
 	\   'left': [ [ 'mode', 'capslock', 'paste', 'fugitive' ],
 	\	      [ 'readonly' ],
@@ -153,6 +166,10 @@ nnoremap gdl :diffget //3<CR>
 map <C-o> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeShowLineNumbers=1
+
+" Git blame configuration
+let g:blamer_enabled=1
+let g:blamer_delay=500
 
 " line highlighter
 set cursorline
